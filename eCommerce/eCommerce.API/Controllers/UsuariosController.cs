@@ -20,11 +20,7 @@ namespace eCommerce.API.Controllers
             _repository = new UsuarioRepository();
         }
 
-        /*
-        => Criar métodos para permitir fazer o CRUD
-        
-        => DELETE -> Remover um usuário
-        */
+        //=> Criar métodos para permitir fazer o CRUD
 
         // => GET -> Obter a lista de usuários;
         [HttpGet]
@@ -62,5 +58,14 @@ namespace eCommerce.API.Controllers
             _repository.Update(usuario);
             return Ok(usuario);
         }
+
+        // => DELETE -> Remover usuários;
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            _repository.Delete(id);
+            return Ok();
+        }
+
     }
 }
