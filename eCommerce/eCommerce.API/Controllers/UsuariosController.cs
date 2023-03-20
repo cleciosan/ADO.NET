@@ -23,9 +23,6 @@ namespace eCommerce.API.Controllers
         /*
         => Criar métodos para permitir fazer o CRUD
         
-        
-        
-        => PUT -> Atualizar um usuário;
         => DELETE -> Remover um usuário
         */
 
@@ -52,12 +49,18 @@ namespace eCommerce.API.Controllers
 
         //=> POST -> Cadastrar um usuário;
         [HttpPost]
-        public IActionResult Insert(Usuario usuario)
+        public IActionResult Insert([FromBody]Usuario usuario)
         {
             _repository.Insert(usuario);
             return Ok(usuario);
         }
 
-
+        //=> PUT -> Atualizar um usuário;
+        [HttpPut]
+        public IActionResult Update([FromBody]Usuario usuario)
+        {
+            _repository.Update(usuario);
+            return Ok(usuario);
+        }
     }
 }
