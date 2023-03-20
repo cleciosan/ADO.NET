@@ -27,6 +27,18 @@ namespace eCommerce.API.Repositories
 
         public void Insert(Usuario usuario)
         {
+            var ultimoUsuario = _db.LastOrDefault();
+
+            if(ultimoUsuario == null)
+            {
+                usuario.Id = 1;
+            }
+            else
+            {
+                usuario.Id = ultimoUsuario.Id;
+                usuario.Id++;
+            }
+
             _db.Add(usuario);
         }
 

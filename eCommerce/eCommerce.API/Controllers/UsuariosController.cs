@@ -1,4 +1,5 @@
-﻿using eCommerce.API.Repositories;
+﻿using eCommerce.API.Models;
+using eCommerce.API.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -21,31 +22,42 @@ namespace eCommerce.API.Controllers
 
         /*
         => Criar métodos para permitir fazer o CRUD
-        => GET -> Obter a lista de usuários;
-        => GET -> Obter o usuário passando o ID;
-        => POST -> Cadastrar um usuário;
+        
+        
+        
         => PUT -> Atualizar um usuário;
         => DELETE -> Remover um usuário
         */
 
-
+        // => GET -> Obter a lista de usuários;
         [HttpGet]
         public IActionResult ObterTodos()
         {
             return Ok(_repository.Get());
         }
 
-        [HttpGet ("{Id}")]
+        //=> GET -> Obter o usuário passando o ID;
+        [HttpGet("{Id}")]
         public IActionResult ObterUsuario(int id)
         {
             var usuario = _repository.Get(id);
 
-            if(usuario == null)
+            if (usuario == null)
             {
                 return NotFound();
             }
 
             return Ok(usuario);
         }
-}
+
+        //=> POST -> Cadastrar um usuário;
+        [HttpPost]
+        public IActionResult Insert(Usuario usuario)
+        {
+            _repository.Insert(usuario);
+            return Ok(usuario);
+        }
+
+
+    }
 }
