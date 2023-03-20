@@ -18,5 +18,34 @@ namespace eCommerce.API.Controllers
         {
             _repository = new UsuarioRepository();
         }
-    }
+
+        /*
+        => Criar métodos para permitir fazer o CRUD
+        => GET -> Obter a lista de usuários;
+        => GET -> Obter o usuário passando o ID;
+        => POST -> Cadastrar um usuário;
+        => PUT -> Atualizar um usuário;
+        => DELETE -> Remover um usuário
+        */
+
+
+        [HttpGet]
+        public IActionResult ObterTodos()
+        {
+            return Ok(_repository.Get());
+        }
+
+        [HttpGet ("{Id}")]
+        public IActionResult ObterUsuario(int id)
+        {
+            var usuario = _repository.Get(id);
+
+            if(usuario == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(usuario);
+        }
+}
 }
