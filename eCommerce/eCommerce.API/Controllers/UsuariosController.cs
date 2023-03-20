@@ -11,5 +11,9 @@ namespace eCommerce.API.Controllers
     [ApiController]
     public class UsuariosController : ControllerBase
     {
+        public UsuariosController()
+        {
+
+        }
     }
 }
