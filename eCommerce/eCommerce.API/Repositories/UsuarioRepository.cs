@@ -8,29 +8,37 @@ namespace eCommerce.API.Repositories
 {
     public class UsuarioRepository : IUsuarioRepository
     {
+        private static List<Usuario> _db = new List<Usuario>()
+        {
+            new Usuario(){Id = 1, Nome = "Filipe Rodrigues", Email="filipe.rodrigues@gmail.com"},
+            new Usuario(){Id = 2, Nome = "Marcelo Rodrigues", Email="marcelo.rodrigues@hotmail.com"},
+            new Usuario(){Id = 3, Nome = "Jessica Rodrigues", Email="jessica.rodrigues@yahoo.com"}
+        };
+
         public List<Usuario> Get()
         {
-            throw new NotImplementedException();
+           return _db;
         }
 
         public Usuario Get(int id)
         {
-            throw new NotImplementedException();
+            return _db.FirstOrDefault(a => a.Id == id);
         }
 
         public void Insert(Usuario usuario)
         {
-            throw new NotImplementedException();
+            _db.Add(usuario);
         }
 
         public void Update(Usuario usuario)
         {
-            throw new NotImplementedException();
+            _db.Remove(_db.FirstOrDefault(a => a.Id == usuario.Id));
+            _db.Add(usuario);
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            _db.Remove(_db.FirstOrDefault(a => a.Id == id));
         }
 
     }
