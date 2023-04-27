@@ -30,7 +30,7 @@ namespace eCommerce.API.Controllers
         }
 
         //=> GET -> Obter o usuário passando o ID;
-        [HttpGet("{Id}")]
+        [HttpGet("{id}")]
         public IActionResult ObterUsuario(int id)
         {
             var usuario = _repository.Get(id);
