@@ -157,7 +157,14 @@ namespace eCommerce.API.Repositories
         {
             try
             {
+                SqlCommand command = new SqlCommand();
+                command.CommandText = "DELETE FROM Usuarios WHERE Id = @Id";
+                command.Connection = (SqlConnection)_connection;
+
+                command.Parameters.AddWithValue("Id", id);
+
                 _connection.Open();
+                command.ExecuteNonQuery();
             }
             finally
             {
