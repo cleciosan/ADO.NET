@@ -60,6 +60,8 @@ namespace eCommerce.API.Repositories
                 command.CommandText = "SELECT * FROM USUARIOS u " +
                     "LEFT JOIN Contatos c ON c.UsuarioId = u.Id " +
                     "LEFT JOIN EnderecosEntrega ee ON ee.UsuarioId = u.Id " +
+                    "LEFT JOIN UsuariosDepartamentos ud ON ud.UsuarioId = u.Id " +
+                    "LEFT JOIN Departamentos          d ON ud.DepartamentoId = d.Id " +
                     "WHERE u.Id = @Id";
                 command.Parameters.AddWithValue("@Id", id);
                 command.Connection = (SqlConnection)_connection;
@@ -98,7 +100,7 @@ namespace eCommerce.API.Repositories
                     {
                         usuario = usuarios[dataReader.GetInt32(0)];
                     }
-                    
+
 
                     EnderecoEntrega enderecoEntrega = new EnderecoEntrega();
                     enderecoEntrega.Id = dataReader.GetInt32(13);
@@ -106,19 +108,35 @@ namespace eCommerce.API.Repositories
                     enderecoEntrega.NomeEndereco = dataReader.GetString("NomeEndereco");
                     enderecoEntrega.CEP = dataReader.GetString("CEP");
                     enderecoEntrega.Estado = dataReader.GetString("Estado");
-                    enderecoEntrega.Cidade = dataReader.GetString("Cidade");    
+                    enderecoEntrega.Cidade = dataReader.GetString("Cidade");
                     enderecoEntrega.Bairro = dataReader.GetString("Bairro");
                     enderecoEntrega.Endereco = dataReader.GetString("Endereco");
                     enderecoEntrega.Numero = dataReader.GetString("Numero");
                     enderecoEntrega.Complemento = dataReader.GetString("Complemento");
 
                     usuario.EnderecosEntrega = (usuario.EnderecosEntrega == null) ? new List<EnderecoEntrega>() : usuario.EnderecosEntrega;
-                    usuario.EnderecosEntrega.Add(enderecoEntrega);
 
-                    
+                    if (usuario.EnderecosEntrega.FirstOrDefault(a => a.Id == enderecoEntrega.Id) == null)
+                    {
+                        usuario.EnderecosEntrega.Add(enderecoEntrega);
+                    }
+
+                    Departamento departamento = new Departamento();
+                    departamento.Id = dataReader.GetInt32(26);
+                    departamento.Nome = dataReader.GetString(27);
+
+                    usuario.Departamentos = (usuario.Departamentos == null) ? new List<Departamento>() : usuario.Departamentos;
+                    if (usuario.Departamentos.FirstOrDefault(a => a.Id == departamento.Id) == null)
+                    {
+                        usuario.Departamentos.Add(departamento);
+                    }
                 }
 
                 return usuarios[usuarios.Keys.First()];
+            }
+            catch (Exception ex) 
+            {
+                return null;
             }
             finally
             {
