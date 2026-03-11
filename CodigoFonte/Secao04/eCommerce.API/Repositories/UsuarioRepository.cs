@@ -167,6 +167,16 @@ namespace eCommerce.API.Repositories
 
                 _connection.Open();
                 usuario.Id = (int)command.ExecuteScalar();
+
+                command.CommandText = "INSERT INTO Contatos (UsuarioId, Telefone, Celular) " +
+                                      "VALUES (@UsuarioId, @Telefone, @Celular);"+
+                                      "SELECT CAST(scope_identity() AS int)";
+                command.Parameters.AddWithValue("@UsuarioId", usuario.Id);
+                command.Parameters.AddWithValue("@Telefone", usuario.Contato.Telefone);
+                command.Parameters.AddWithValue("@Celular", usuario.Contato.Celular);
+
+                usuario.Contato.UsuarioId = usuario.Id;
+                usuario.Contato.Id = (int)command.ExecuteScalar();
             }
             finally
             {
