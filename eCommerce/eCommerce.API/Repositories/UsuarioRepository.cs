@@ -132,9 +132,24 @@ namespace eCommerce.API.Repositories
                     {
                         usuario.EnderecosEntrega.Add(enderecoEntrega);
                     }
+
+                    Departamento departamento = new Departamento();
+                    departamento.Id = dataReader.GetInt32(26);
+                    departamento.Nome = dataReader.GetString(27);
+
+                    usuario.Departamentos = (usuario.Departamentos == null) ? new List<Departamento>() : usuario.Departamentos;
+
+                    if (usuario.Departamentos.FirstOrDefault(a => a.Id == departamento.Id) == null)
+                    {
+                        usuario.Departamentos.Add(departamento);
+                    }
                 }
 
                 return usuarios[usuarios.Keys.First()];
+            }
+            catch(Exception e)
+            {
+                return null;
             }
 
             finally
