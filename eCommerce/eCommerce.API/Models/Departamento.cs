@@ -8,7 +8,7 @@ namespace eCommerce.API.Models
     {
         public int Id { get; set; }
 
-        [Required]
+        
         [MaxLength(100)]
         public string Nome { get; set; }
 
