@@ -190,8 +190,11 @@ namespace eCommerce.API.Repositories
 
                 foreach (var endereco in usuario.EnderecosEntrega)
                 {
+                    command = new SqlCommand();
+                    command.Connection = (SqlConnection)_connection;
+
                     command.CommandText = "INSERT INTO EnderecosEntrega (UsuarioId,NomeEndereco,CEP,Estado,Cidade,Bairro,Endereco,Numero,Complemento) VALUES (@UsuarioId,@NomeEndereco,@CEP,@Estado,@Cidade,@Bairro,@Endereco,@Numero,@Complemento);SELECT CAST(scope_identity() AS int)";
-                    //command.Parameters.AddWithValue("@UsuarioId", usuario.Id);
+                    command.Parameters.AddWithValue("@UsuarioId", usuario.Id);
                     command.Parameters.AddWithValue("@NomeEndereco", endereco.NomeEndereco);
                     command.Parameters.AddWithValue("@CEP", endereco.CEP);
                     command.Parameters.AddWithValue("@Estado", endereco.Estado);
