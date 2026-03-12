@@ -47,8 +47,16 @@ namespace eCommerce.API.Controllers
         [HttpPost]
         public IActionResult Insert([FromBody]Usuario usuario)
         {
-            _repository.Insert(usuario);
-            return Ok(usuario);
+            try
+            {
+                _repository.Insert(usuario);
+                return Ok(usuario);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500,e.Message);
+            }
+            
         }
 
         //=> PUT -> Atualizar um usuário;

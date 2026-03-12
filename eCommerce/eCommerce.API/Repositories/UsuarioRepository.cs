@@ -199,7 +199,7 @@ namespace eCommerce.API.Repositories
                     command.Connection = (SqlConnection)_connection;
                     command.Transaction = transaction;
 
-                    command.CommandText = "INSERT INTO EnderecosEntrega (UsuarioId,NomeEndereco,CEP,Estado,Cidade,Bairro,Endereco,Numero,Complemento) VALUES (@UsuarioId,@NomeEndereco,@CEP,@Estado,@Cidade,@Bairro,@Endereco,@Numero,@Complemento);SELECT CAST(scope_identity() AS int)";
+                    command.CommandText = "INSERT INTO EnderecosEntrega (Id,UsuarioId,NomeEndereco,CEP,Estado,Cidade,Bairro,Endereco,Numero,Complemento) VALUES (@UsuarioId,@NomeEndereco,@CEP,@Estado,@Cidade,@Bairro,@Endereco,@Numero,@Complemento);SELECT CAST(scope_identity() AS int)";
                     command.Parameters.AddWithValue("@UsuarioId", usuario.Id);
                     command.Parameters.AddWithValue("@NomeEndereco", endereco.NomeEndereco);
                     command.Parameters.AddWithValue("@CEP", endereco.CEP);
@@ -240,7 +240,8 @@ namespace eCommerce.API.Repositories
                 {
                     //Adicionar no log que o Rollback falhou
                 }
-                
+                throw new Exception("Erro ao tentar inserir os dados.", ex);
+
             }
             finally
             {
