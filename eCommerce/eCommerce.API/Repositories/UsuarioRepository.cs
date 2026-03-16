@@ -63,7 +63,6 @@ namespace eCommerce.API.Repositories
             return usuarios;
         }
 
-
         public Usuario Get(int id)
         {
             try
